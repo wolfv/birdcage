@@ -29,6 +29,9 @@ pub enum Error {
 
     /// Sandbox activation failed.
     ActivationFailed(String),
+
+    /// Setup error, used for Windows AppContainer setup.
+    Setup(String),
 }
 
 impl StdError for Error {}
@@ -49,6 +52,9 @@ impl Display for Error {
             Self::Io(error) => write!(f, "input/output error: {error}"),
             Self::ActivationFailed(error) => {
                 write!(f, "failed to initialize a sufficient sandbox: {error}")
+            },
+            Self::Setup(error) => {
+                write!(f, "setup error: {error}")
             },
         }
     }
