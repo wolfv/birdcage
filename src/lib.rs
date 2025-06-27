@@ -38,6 +38,8 @@ use crate::error::Result;
 use crate::linux::LinuxSandbox;
 #[cfg(target_os = "macos")]
 use crate::macos::MacSandbox;
+#[cfg(target_os = "windows")]
+use crate::windows::WindowsSandbox;
 use crate::process::{Child, Command};
 
 pub mod error;
@@ -45,6 +47,8 @@ pub mod error;
 mod linux;
 #[cfg(target_os = "macos")]
 mod macos;
+#[cfg(target_os = "windows")]
+mod windows;
 pub mod process;
 
 /// Default platform sandbox.
@@ -60,6 +64,13 @@ pub type Birdcage = LinuxSandbox;
 /// platform.
 #[cfg(target_os = "macos")]
 pub type Birdcage = MacSandbox;
+
+/// Default platform sandbox.
+///
+/// This type will automatically pick the default sandbox for each available
+/// platform.
+#[cfg(target_os = "windows")]
+pub type Birdcage = WindowsSandbox;
 
 pub trait Sandbox: Sized {
     /// Setup the sandboxing environment.
