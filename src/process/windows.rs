@@ -1,8 +1,8 @@
 //! Windows-specific process implementation.
 
 use std::ffi::c_void;
-use std::{io, os::windows::process::ExitStatusExt};
 use std::process::ExitStatus;
+use std::{io, os::windows::process::ExitStatusExt};
 
 use windows::Win32::System::Threading::{GetProcessId, TerminateProcess};
 use windows::Win32::{
@@ -21,8 +21,8 @@ pub struct WindowsChild {
 impl WindowsChild {
     pub fn new(process_handle: u32, job_handle: Option<u32>) -> Self {
         Self {
-            handle: HANDLE(process_handle as  *mut c_void),
-            job_handle: job_handle.map(|h| HANDLE(h as  *mut c_void)),
+            handle: HANDLE(process_handle as *mut c_void),
+            job_handle: job_handle.map(|h| HANDLE(h as *mut c_void)),
         }
     }
 
@@ -46,9 +46,10 @@ impl WindowsChild {
             match WaitForSingleObject(self.handle, 0) {
                 WAIT_OBJECT_0 => {
                     let mut exit_code = 0u32;
-                    GetExitCodeProcess(self.handle, &mut exit_code).expect("Failed to get exit code");
+                    GetExitCodeProcess(self.handle, &mut exit_code)
+                        .expect("Failed to get exit code");
                     Ok(Some(ExitStatus::from_raw(exit_code)))
-                }
+                },
                 _ => Ok(None),
             }
         }

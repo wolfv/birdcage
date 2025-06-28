@@ -16,6 +16,6 @@ pub use crate::process::macos::{
 #[cfg(target_os = "windows")]
 pub use crate::process::windows::WindowsChild as Child;
 #[cfg(target_os = "windows")]
-pub use std::process::{Command, ExitStatus, Output, Stdio};
-#[cfg(target_os = "windows")]
 pub use std::process::{ChildStderr, ChildStdin, ChildStdout};
+#[cfg(target_os = "windows")]
+pub use std::process::{Command, ExitStatus, Output, Stdio};

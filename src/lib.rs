@@ -38,18 +38,18 @@ use crate::error::Result;
 use crate::linux::LinuxSandbox;
 #[cfg(target_os = "macos")]
 use crate::macos::MacSandbox;
+use crate::process::{Child, Command};
 #[cfg(target_os = "windows")]
 use crate::windows::WindowsSandbox;
-use crate::process::{Child, Command};
 
 pub mod error;
 #[cfg(target_os = "linux")]
 mod linux;
 #[cfg(target_os = "macos")]
 mod macos;
+pub mod process;
 #[cfg(target_os = "windows")]
 mod windows;
-pub mod process;
 
 /// Default platform sandbox.
 ///
